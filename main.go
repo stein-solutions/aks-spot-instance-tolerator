@@ -15,9 +15,9 @@ import (
 
 func main() {
 
-	slog.SetLogLoggerLevel(slog.LevelDebug)
-
 	config := config.NewConfig()
+	slog.SetLogLoggerLevel(config.LogLevel)
+
 	watcher := util.NewSecretWatcher(config.CertDirPath)
 	watcher.WatchSecret()
 

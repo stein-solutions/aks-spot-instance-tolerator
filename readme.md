@@ -6,7 +6,7 @@ With spot instances you can **save up to 88% of compute cost** over on demand in
 
 ## The Problem
 
-For a pod to be allowed to run on a spot instance node in aks, the pod need to have the toleration `kubernetes.azure.com/scalesetpriority=spot:NoSchedule` or it will not be deployed on that node. To manually add this toleration to every Deployment, Statefulset, Job and pod (spawned through other means) is cumbersome and in some instances impossible. 
+For a pod to be allowed to run on a spot instance node in aks, the pod needs to have the toleration `kubernetes.azure.com/scalesetpriority=spot:NoSchedule` or it will not be deployed on that node. To manually add this toleration to every Deployment, Statefulset, Job and pod (spawned through other means) is cumbersome and in some instances impossible. 
 
 ## The Solutions
 

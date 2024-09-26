@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log/slog"
 	"os"
 	"time"
 )
@@ -14,6 +15,7 @@ type Config struct {
 	WebhookName          string
 	WebhookPort          string
 	HealthPort           string
+	LogLevel             slog.Level
 	TlsValidForSeconds   int
 	TlsRenewEarlySeconds int
 }
@@ -30,7 +32,26 @@ func NewConfig() *Config {
 		HealthPort:           getHealthPort(),
 		TlsValidForSeconds:   int(time.Hour.Seconds() * 24 * 10),
 		TlsRenewEarlySeconds: int(time.Hour.Seconds() * 24 * 5),
+		LogLevel:             getLogLevel(),
 	}
+}
+
+func getLogLevel() slog.Level {
+	if logLevel, exists := os.LookupEnv("AKS_SPOT_INSTANCE_TOLERATOR_LOG_LEVEL"); exists {
+		switch logLevel {
+		case "debug":
+			return slog.LevelDebug
+		case "info":
+			return slog.LevelInfo
+		case "warn":
+			return slog.LevelWarn
+		case "error":
+			return slog.LevelError
+		default:
+			return slog.LevelInfo
+		}
+	}
+	return slog.LevelInfo
 }
 
 func getWebhookPort() string {
