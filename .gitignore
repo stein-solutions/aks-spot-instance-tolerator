@@ -26,6 +26,7 @@ go.work.sum
 .env
 
 aks-spot-instance-tolerator
+!aks-spot-instance-tolerator/
 
 #HELM
 # General files for the project
