@@ -1,9 +1,0 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: {{ include "aks-spot-instance-tolerator.fullname" . }}-role
-rules:
-- apiGroups: [""]
-  resources: ["secrets"]
-  resourceNames: ["{{ include "aks-spot-instance-tolerator.fullname" . }}-tls"]
-  verbs: ["watch", "update"]
