@@ -1,8 +1,6 @@
 name: Build and Push with ko
 on:
   push:
-    tags:
-      - 'v*'
     branches: ['main']
 
 jobs:
@@ -14,6 +12,16 @@ jobs:
       packages: write
 
     steps:
+      - name: Check if commit is tagged
+        id: check_tag
+        run: |
+          if [ -z "${GITHUB_REF##refs/tags/*}" ]; then
+            echo "This commit is tagged."
+          else
+            echo "No tag associated with this commit."
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
