@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-
+	slog.Info("Starting...")
 	config := config.NewConfig()
 	slog.SetLogLoggerLevel(config.LogLevel)
 
