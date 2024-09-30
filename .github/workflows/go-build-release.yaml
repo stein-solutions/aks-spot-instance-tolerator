@@ -1,6 +1,8 @@
 name: Build and Push with ko
 on:
   push:
+    tags:
+      - 'v*'
     branches: ['main']
 
 jobs:
