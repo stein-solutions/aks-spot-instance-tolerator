@@ -83,6 +83,8 @@ var _ = Describe("Server", func() {
 
 			StartHttpServer(mockCfg, mockFileWatcher)
 
+			time.Sleep(1 * time.Second)
+
 			clientOldTls := getHttpClient(mockCfg)
 			_, err = clientOldTls.Get("https://0.0.0.0:" + mockCfg.WebhookPort)
 			Expect(err).NotTo(HaveOccurred())
