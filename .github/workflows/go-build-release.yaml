@@ -1,7 +1,8 @@
 name: Build and Push with ko
 on:
   push:
-    branches: ['main']
+    tags:
+      - 'release*'
 
 jobs:
   publish:
@@ -12,16 +13,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Check if commit is tagged
-        id: check_tag
-        run: |
-          if [ -z "${GITHUB_REF##refs/tags/*}" ]; then
-            echo "This commit is tagged."
-          else
-            echo "No tag associated with this commit."
-            exit 1
-          fi
-
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
@@ -31,7 +22,22 @@ jobs:
 
       - uses: ko-build/setup-ko@v0.6
       # - run: ko build
-      - name: Generate and upload release.yaml
+      - name: ko build
         run: |
           ./run-build.sh
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: prepare delivery
+        run: |
+          mkdir delivery
+          cp -r helm/aks-spot-instance-tolerator delivery/
+          ko resolve -f helm/aks-spot-instance-tolerator/values.yaml --bare > delivery/values.yaml
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: 'delivery'
+          target-directory: 'charts/aks-sport-instance-tolerator'
+          destination-github-username: 'stein-solutions'
+          destination-repository-name: 'helm-charts'
+          user-email: chart-bot@stein.solutions
+          target-branch: main

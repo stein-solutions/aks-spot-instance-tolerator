@@ -7,7 +7,8 @@ image:
   repository: "mariusstein77/aks-spot-instance-tolerater"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v0.2"
+  tag: "v0.2-test@sha256:772a1779b470e1cb22349c83884b0ea7efb47c439ef4028342a42c81ed537024"
+imageCoordinates: "ko://github.com/stein-solutions/aks-spot-instance-tolerator"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

@@ -17,7 +17,7 @@ The aks-spot-instance-tolerator automatically adds this toleration to every pod 
 The aks-spot-instance-tolerator can be installed through helm. 
 
 1. run `helm repo add stein.solutions https://stein-solutions.github.io/helm-charts/`
-2. run `helm install <release-name> stein-solutions/aks-spot-instance-tolerator`
+2. run `helm upgrade --install <release-name> stein.solutions/aks-spot-instance-tolerator`
 
 ## stein.solutions
 
