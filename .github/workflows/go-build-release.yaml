@@ -53,7 +53,7 @@ jobs:
             echo "debug 2"
             echo "release_tag=true" >> $GITHUB_ENV
           else
-            echo "debug 2"
+            echo "debug 3"
             echo "release_tag=false" >> $GITHUB_ENV
           fi
       - name: Pushes to another repository
