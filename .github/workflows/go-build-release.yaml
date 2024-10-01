@@ -46,7 +46,7 @@ jobs:
       - name: Check for release tag
         id: check_tag
         run: |
-          TAG=$(git tag --contains HEAD)
+          TAG=$(git tag --contains HEAD | grep '^release' || false)
           echo "debug 1"
           echo $TAG
           if [ -n "$TAG" ]; then
