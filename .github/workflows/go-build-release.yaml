@@ -47,13 +47,9 @@ jobs:
         id: check_tag
         run: |
           TAG=$(git tag --contains HEAD | grep '^release' || exit 0)
-          echo "debug 1"
-          echo $TAG
           if [ -n "$TAG" ]; then
-            echo "debug 2"
             echo "release_tag=true" >> $GITHUB_ENV
           else
-            echo "debug 3"
             echo "release_tag=false" >> $GITHUB_ENV
           fi
       - name: Pushes to another repository
