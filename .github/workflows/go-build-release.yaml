@@ -25,20 +25,21 @@ jobs:
           ./run-build.sh
   publish:
     name: Publish
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read
 
     steps:
-      # - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       # - uses: actions/setup-go@v5
       #   with:
       #     go-version: '1.22.x'
       # - name: run tests
       #   run: go test ./...
 
-      # - uses: ko-build/setup-ko@v0.6
+      - uses: ko-build/setup-ko@v0.6
       # # - run: ko build
       # - name: ko build
       #   run: |
