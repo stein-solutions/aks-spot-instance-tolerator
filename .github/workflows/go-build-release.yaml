@@ -41,14 +41,26 @@ jobs:
           mkdir delivery
           cp -r helm/aks-spot-instance-tolerator/ delivery/
           ko resolve -f helm/aks-spot-instance-tolerator/values.yaml --bare > delivery/aks-spot-instance-tolerator/values.yaml
-      # - name: Pushes to another repository
-      #   uses: cpina/github-action-push-to-another-repository@main
-      #   env:
-      #     SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-      #   with:
-      #     source-directory: 'delivery/aks-spot-instance-tolerator'
-      #     target-directory: 'charts/aks-spot-instance-tolerator'
-      #     destination-github-username: 'stein-solutions'
-      #     destination-repository-name: 'helm-charts'
-      #     user-email: chart-bot@stein.solutions
-      #     target-branch: main
+      - name: Get tags
+        run: git fetch --tags origin
+      - name: Check for release tag
+        id: check_tag
+        run: |
+          TAG=$(git tag --contains HEAD | grep '^release')
+          if [ -n "$TAG" ]; then
+            echo "release_tag=true" >> $GITHUB_ENV
+          else
+            echo "release_tag=false" >> $GITHUB_ENV
+          fi
+      - name: Pushes to another repository
+        if: env.release_tag == 'true'
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: 'delivery/aks-spot-instance-tolerator'
+          target-directory: 'charts/aks-spot-instance-tolerator'
+          destination-github-username: 'stein-solutions'
+          destination-repository-name: 'helm-charts'
+          user-email: chart-bot@stein.solutions
+          target-branch: main
