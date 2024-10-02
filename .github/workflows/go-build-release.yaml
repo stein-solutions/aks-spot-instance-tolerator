@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    # tags:
-    #   - 'release*'
 
 jobs:
   build:
@@ -24,6 +22,8 @@ jobs:
       - uses: ko-build/setup-ko@v0.6
       - name: go build
         run: go build
+      - name: helm lint
+        run: helm lint helm/aks-spot-instance-tolerator
   publish:
     name: Publish
     needs: build
@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir delivery
           cp -r helm/aks-spot-instance-tolerator/ delivery/
-          ko resolve -f helm/aks-spot-instance-tolerator/values.yaml --bare > delivery/aks-spot-instance-tolerator/values.yaml
+          ko resolve -f helm/aks-spot-instance-tolerator/values.yaml --platform=all --bare > delivery/aks-spot-instance-tolerator/values.yaml
       - name: Get tags
         run: git fetch --tags origin
       - name: Check for release tag
