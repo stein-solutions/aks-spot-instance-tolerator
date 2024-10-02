@@ -19,6 +19,14 @@ The aks-spot-instance-tolerator can be installed through helm.
 1. run `helm repo add stein.solutions https://stein-solutions.github.io/helm-charts/`
 2. run `helm upgrade --install <release-name> stein.solutions/aks-spot-instance-tolerator`
 
+## How to release a new version
+
+After changes have been made to the software, the helm chart version should be incremented. To release a new version, we tag a commit in the main branch with a tag starting with `release`. E.g.:
+
+`git tag release-2024-10-2-00001 -m "release 1.0.0"`
+
+Afterwards the github action build the code, creates the image and releases the helm chart. 
+
 ## stein.solutions
 
 You are aiming to save costs of your kubernetes clusters? You are looking for a strong partner to build your companies cloud platform? Get in touch: stein.solutions
