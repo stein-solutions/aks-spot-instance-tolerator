@@ -22,9 +22,8 @@ jobs:
         run: go test ./...
 
       - uses: ko-build/setup-ko@v0.6
-      - name: ko build
-        run: |
-          ./run-build.sh
+      - name: go build
+        run: go build
   publish:
     name: Publish
     needs: build
