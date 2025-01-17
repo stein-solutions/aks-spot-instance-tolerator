@@ -5,7 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: {{ include "aks-spot-instance-tolerator.serviceAccountName" . }}
-  namespace: default
+  namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: {{ include "aks-spot-instance-tolerator.fullname" . }}-clusterrole

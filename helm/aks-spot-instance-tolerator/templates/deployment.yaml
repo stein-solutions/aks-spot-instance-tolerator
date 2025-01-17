@@ -52,7 +52,10 @@ spec:
               value: "{{ include "aks-spot-instance-tolerator.fullname" . }}-webhook"
             - name: AKS_SPOT_INSTANCE_TOLERATOR_WEBHOOK_PORT
               value: "{{ .Values.service.port }}"
-
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           volumeMounts:
             - name: webhook-certs
               mountPath: /etc/webhook/certs
